@@ -1,105 +1,81 @@
-/* eslint-disable @next/next/no-img-element */
+/* eslint-disable react-hooks/exhaustive-deps */
+"use client"
+import { BarChart, Goal, History, House, MessagesSquare, Wallet, X } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 
-function Sidebar() {
+interface SidebarProps {
+    open: boolean;
+    setOpen: (open: boolean) => void;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
+    const pathname = usePathname();
+    useEffect(() => {
+        setOpen(false);
+    }, [pathname]);
     const itemsMenu = [
         {
             title: "Tổng quan",
-            icon: `<svg width="18" height="21" viewBox="0 0 18 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path class="path-1" d="M0 8.84719C0 7.99027 0.366443 7.17426 1.00691 6.60496L6.34255 1.86217C7.85809 0.515019 10.1419 0.515019 11.6575 1.86217L16.9931 6.60496C17.6336 7.17426 18 7.99027 18 8.84719V17C18 19.2091 16.2091 21 14 21H4C1.79086 21 0 19.2091 0 17V8.84719Z" fill="#1A202C"></path>
-                        <path class="path-2" d="M5 17C5 14.7909 6.79086 13 9 13C11.2091 13 13 14.7909 13 17V21H5V17Z" fill="#22C55E"></path>
-                    </svg>`,
+            icon: <House />,
             link: '/dashboard'
         },
         {
             title: "Lịch sử giao dịch",
-            icon: `<svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M18 16V6C18 3.79086 16.2091 2 14 2H4C1.79086 2 0 3.79086 0 6V16C0 18.2091 1.79086 20 4 20H14C16.2091 20 18 18.2091 18 16Z" fill="#1A202C" className="path-1"></path>
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M4.25 8C4.25 7.58579 4.58579 7.25 5 7.25H13C13.4142 7.25 13.75 7.58579 13.75 8C13.75 8.41421 13.4142 8.75 13 8.75H5C4.58579 8.75 4.25 8.41421 4.25 8Z" fill="#22C55E" className="path-2"></path>
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M4.25 12C4.25 11.5858 4.58579 11.25 5 11.25H13C13.4142 11.25 13.75 11.5858 13.75 12C13.75 12.4142 13.4142 12.75 13 12.75H5C4.58579 12.75 4.25 12.4142 4.25 12Z" fill="#22C55E" className="path-2"></path>
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M4.25 16C4.25 15.5858 4.58579 15.25 5 15.25H9C9.41421 15.25 9.75 15.5858 9.75 16C9.75 16.4142 9.41421 16.75 9 16.75H5C4.58579 16.75 4.25 16.4142 4.25 16Z" fill="#22C55E" className="path-2"></path>
-                        <path d="M11 0H7C5.89543 0 5 0.895431 5 2C5 3.10457 5.89543 4 7 4H11C12.1046 4 13 3.10457 13 2C13 0.895431 12.1046 0 11 0Z" fill="#22C55E" className="path-2"></path>
-                    </svg> `,
+            icon: <History />,
             link: "/transaction"
         },
         {
             title: "Thống kê",
-            icon: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M0 4C0 1.79086 1.79086 0 4 0H16C18.2091 0 20 1.79086 20 4V16C20 18.2091 18.2091 20 16 20H4C1.79086 20 0 18.2091 0 16V4Z" fill="#1A202C" class="path-1"></path>
-                    <path d="M14 9C12.8954 9 12 9.89543 12 11L12 13C12 14.1046 12.8954 15 14 15C15.1046 15 16 14.1046 16 13V11C16 9.89543 15.1046 9 14 9Z" fill="#22C55E" class="path-2"></path>
-                    <path d="M6 5C4.89543 5 4 5.89543 4 7L4 13C4 14.1046 4.89543 15 6 15C7.10457 15 8 14.1046 8 13L8 7C8 5.89543 7.10457 5 6 5Z" fill="#22C55E" class="path-2"></path>
-                    </svg>`,
+            icon: <BarChart />,
             link: "/analytics"
         },
         {
             title: "Ví của tôi",
-            icon: `<svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M20 4C20 1.79086 18.2091 0 16 0H4C1.79086 0 0 1.79086 0 4V14C0 16.2091 1.79086 18 4 18H16C18.2091 18 20 16.2091 20 14V4Z" fill="#1A202C" class="path-1"></path>
-                            <path d="M6 9C6 7.34315 4.65685 6 3 6H0V12H3C4.65685 12 6 10.6569 6 9Z" fill="#22C55E" class="path-2"></path>
-                          </svg>`,
+            icon: <Wallet />,
             link: "/wallet"
         },
         {
             title: "Mục tiêu",
-            icon: `<svg width="20" height="18" fill="#22C55E" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M496.844,15.155C487.07,5.381,474.076,0,460.255,0c-13.822,0-26.816,5.381-36.588,15.155l-34.659,34.658 c-0.009,0.009-48.661,48.661-48.661,48.661c-35.156-21.678-75.469-33.112-117.028-33.112C100.18,65.362,0,165.543,0,288.681 S100.18,512,223.319,512s223.319-100.181,223.319-223.319c0-31.959-6.614-62.822-19.655-91.734 c-1.855-4.115-6.695-5.944-10.807-4.088c-4.113,1.856-5.944,6.695-4.087,10.808c12.082,26.786,18.209,55.39,18.209,85.015 c0,114.129-92.851,206.979-206.979,206.979S16.34,402.81,16.34,288.681S109.191,81.702,223.319,81.702 c37.215,0,73.346,9.889,105.127,28.673l-30.084,30.084c-23.141-11.724-48.949-17.906-75.043-17.906 c-91.603,0-166.128,74.524-166.128,166.128s74.524,166.128,166.128,166.128s166.128-74.524,166.128-166.128 c0-15.686-2.192-31.227-6.516-46.19c-1.252-4.335-5.783-6.834-10.117-5.581c-4.335,1.252-6.834,5.782-5.582,10.117 c3.897,13.489,5.873,27.503,5.873,41.654c0,82.592-67.194,149.787-149.787,149.787S73.532,371.273,73.532,288.681 s67.194-149.787,149.787-149.787c21.724,0,43.223,4.755,62.809,13.799l-31.619,31.619c-10.115-3.025-20.581-4.567-31.191-4.567 c-60.067,0-108.936,48.868-108.936,108.936s48.868,108.936,108.936,108.936c58.039,0,105.826-45.368,108.791-103.282 c0.231-4.507-3.235-8.347-7.742-8.578c-4.505-0.229-8.347,3.235-8.578,7.741c-2.52,49.222-43.139,87.779-92.472,87.779 c-51.057,0-92.596-41.538-92.596-92.596s41.538-92.596,92.596-92.596c6.032,0,12.007,0.601,17.876,1.756 c-0.069,0.102-0.131,0.208-0.195,0.313c-0.045,0.073-0.088,0.147-0.131,0.222c-0.131,0.229-0.248,0.462-0.355,0.7 c-0.023,0.051-0.049,0.1-0.071,0.153c-0.126,0.3-0.236,0.605-0.326,0.915c-0.007,0.02-10.625,37.182-10.625,37.182 c-2.049-0.247-4.111-0.389-6.176-0.389c-28.531,0-51.745,23.213-51.745,51.745c0,28.531,23.212,51.745,51.745,51.745 c17.693,0,33.975-8.906,43.556-23.821c2.438-3.796,1.338-8.851-2.459-11.289c-3.796-2.438-8.851-1.339-11.29,2.46 c-6.559,10.211-17.702,16.309-29.806,16.309c-19.521,0-35.404-15.882-35.404-35.404c0-19.522,15.883-35.404,35.404-35.404 c0.535,0,1.069,0.029,1.602,0.053l-9.459,33.107c-0.815,2.853-0.02,5.924,2.079,8.022c1.553,1.553,3.641,2.392,5.778,2.392 c0.75,0,1.503-0.103,2.244-0.315l86.273-24.65c1.336-0.381,2.55-1.097,3.533-2.077L462.179,123 c0.004-0.004,34.666-34.666,34.666-34.666C506.619,78.56,512,65.567,512,51.745S506.617,24.929,496.844,15.155z M347.246,114.685 c0.016-0.016,0.034-0.033,0.05-0.05L394.78,67.15l19.257,19.258L278.78,221.664l-19.257-19.258L347.246,114.685z M235.215,276.785 l4.128-14.446l10.318,10.318L235.215,276.785z M267.635,267.522l-23.157-23.158l7.532-26.36l41.985,41.986L267.635,267.522z M309.591,252.477l-19.257-19.257L425.592,97.963l19.257,19.258L309.591,252.477z M456.403,105.666l-50.068-50.069l11.554-11.554 l50.069,50.068L456.403,105.666z M485.29,76.778l-5.777,5.778l-50.069-50.069l5.777-5.777 c6.688-6.688,15.578-10.371,25.035-10.371c9.457,0,18.347,3.683,25.035,10.371c6.688,6.686,10.37,15.577,10.37,25.035 S491.978,70.093,485.29,76.778z"></path> </g> </g> </g></svg>`,
+            icon: <Goal />,
             link: '/goals'
         },
         {
             title: "Chatbot",
-            icon: `<svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5 2V11C5 12.1046 5.89543 13 7 13H18C19.1046 13 20 12.1046 20 11V2C20 0.895431 19.1046 0 18 0H7C5.89543 0 5 0.89543 5 2Z" fill="#1A202C" class="path-1"></path>
-                            <path d="M0 15C0 13.8954 0.895431 13 2 13H2.17157C2.70201 13 3.21071 13.2107 3.58579 13.5858C4.36683 14.3668 5.63317 14.3668 6.41421 13.5858C6.78929 13.2107 7.29799 13 7.82843 13H8C9.10457 13 10 13.8954 10 15V16C10 17.1046 9.10457 18 8 18H2C0.89543 18 0 17.1046 0 16V15Z" fill="#22C55E" class="path-2"></path>
-                            <path d="M7.5 9.5C7.5 10.8807 6.38071 12 5 12C3.61929 12 2.5 10.8807 2.5 9.5C2.5 8.11929 3.61929 7 5 7C6.38071 7 7.5 8.11929 7.5 9.5Z" fill="#22C55E" class="path-2"></path>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M8.25 4.5C8.25 4.08579 8.58579 3.75 9 3.75L16 3.75C16.4142 3.75 16.75 4.08579 16.75 4.5C16.75 4.91421 16.4142 5.25 16 5.25L9 5.25C8.58579 5.25 8.25 4.91421 8.25 4.5Z" fill="#22C55E" class="path-2"></path>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M11.25 8.5C11.25 8.08579 11.5858 7.75 12 7.75L16 7.75C16.4142 7.75 16.75 8.08579 16.75 8.5C16.75 8.91421 16.4142 9.25 16 9.25L12 9.25C11.5858 9.25 11.25 8.91421 11.25 8.5Z" fill="#22C55E" class="path-2"></path>
-                          </svg>`,
+            icon: <MessagesSquare />,
             link: "/chatbot"
         },
         {
-            title: "Cài đặt",
-            icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M13.0606 2H10.9394C9.76787 2 8.81817 2.89543 8.81817 4C8.81817 5.26401 7.46574 6.06763 6.35556 5.4633L6.24279 5.40192C5.22823 4.84963 3.93091 5.17738 3.34515 6.13397L2.28455 7.86602C1.69879 8.8226 2.0464 10.0458 3.06097 10.5981C4.17168 11.2027 4.17168 12.7973 3.06096 13.4019C2.0464 13.9542 1.69879 15.1774 2.28454 16.134L3.34515 17.866C3.93091 18.8226 5.22823 19.1504 6.24279 18.5981L6.35555 18.5367C7.46574 17.9324 8.81817 18.736 8.81817 20C8.81817 21.1046 9.76787 22 10.9394 22H13.0606C14.2321 22 15.1818 21.1046 15.1818 20C15.1818 18.736 16.5343 17.9324 17.6445 18.5367L17.7572 18.5981C18.7718 19.1504 20.0691 18.8226 20.6548 17.866L21.7155 16.134C22.3012 15.1774 21.9536 13.9542 20.939 13.4019C19.8283 12.7973 19.8283 11.2027 20.939 10.5981C21.9536 10.0458 22.3012 8.82262 21.7155 7.86603L20.6548 6.13398C20.0691 5.1774 18.7718 4.84965 17.7572 5.40193L17.6445 5.46331C16.5343 6.06765 15.1818 5.26402 15.1818 4C15.1818 2.89543 14.2321 2 13.0606 2Z" fill="#1A202C" class="path-1"></path>
-                            <path d="M15.75 12C15.75 14.0711 14.0711 15.75 12 15.75C9.92893 15.75 8.25 14.0711 8.25 12C8.25 9.92893 9.92893 8.25 12 8.25C14.0711 8.25 15.75 9.92893 15.75 12Z" fill="#22C55E" class="path-2"></path>
-                          </svg>`,
-            link: "/setting"
+            title: "Thông báo qua Telegram",
+            icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-telegram" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.287 5.906q-1.168.486-4.666 2.01-.567.225-.595.442c-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294q.39.01.868-.32 3.269-2.206 3.374-2.23c.05-.012.12-.026.166.016s.042.12.037.141c-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8 8 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629q.14.092.27.187c.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.4 1.4 0 0 0-.013-.315.34.34 0 0 0-.114-.217.53.53 0 0 0-.31-.093c-.3.005-.763.166-2.984 1.09"/>
+          </svg>,
+            link: "/telegram"
         },
     ];
     return (  
-        <aside className="block xl:block sm:hidden sidebar-wrapper w-[308px] fixed top-0 bg-white h-full z-30">
-            <div className="sidebar-header relative border-r border-b  border-r-[#F7F7F7] border-b-[#F7F7F7] dark:border-darkblack-400 w-full h-[108px] flex items-center pl-[50px] z-30">
-                <Link href="/">
-                    <img src="https://spaceraceit.com/html/bankco/assets/images/logo/logo-color.svg" className="hidden dark:block " alt="logo" />
+        <>
+        {open && <div onClick={() => setOpen(!open)} className="fixed inset-0 z-40 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"></div>}
+        <aside className={`fixed inset-y-0 left-0 z-50 ${open ? 'p-6 shadow-lg' : ''} w-4/5 sm:w-14 flex-col border-r bg-background duration-300 transition-transform ease-in-out ${open ? 'transform-none' : '-translate-x-full'} sm:translate-x-0`}>
+            <nav className="sm:flex flex-col items-center sm:gap-4 px-2 sm:py-5 grid gap-6 max-sm:text-lg max-sm:font-medium">
+                <Link className="group w-20 h-20 flex sm:h-9 sm:w-9 shrink-0 items-center justify-center gap-2 rounded-full text-lg font-semibold text-primary-foreground md:text-base" href="#">
+                    <Image width={12} height={12} src="/tlu.svg" className="h-full w-full transition-all group-hover:scale-110" alt="Logo" />
                 </Link>
-                <button type="button" className="drawer-btn absolute right-0 top-auto" title="Ctrl+b">
-                    <span>
-                        <svg width="16" height="40" viewBox="0 0 16 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M0 10C0 4.47715 4.47715 0 10 0H16V40H10C4.47715 40 0 35.5228 0 30V10Z" fill="#22C55E"></path>
-                            <path d="M10 15L6 20.0049L10 25.0098" stroke="#ffffff" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"></path>
-                        </svg>
-                    </span>
-                </button>
-            </div>
-            <div className="sidebar-body pl-[48px] pt-[14px] w-full relative z-30 h-screen overflow-style-none overflow-y-scroll pb-[200px]">
-                <div className="nav-wrapper pr-[50px] mb-[36px]">
-                    <div className="item-wrapper mb-5">
-                        <ul>
-                            {itemsMenu.map((item, index) => (
-                            <li className="item py-[11px] text-bgray-900" key={index}>
-                                <Link href={item.link}>
-                                    <div className="flex items-center justify-between">
-                                        <div className="flex space-x-2.5 items-center">
-                                            <span className="item-ico" dangerouslySetInnerHTML={{__html: item.icon}} />
-                                            <span className="item-text text-lg font-medium leading-none">{item.title}</span>
-                                        </div>
-                                    </div>
-                                </Link>
-                            </li>
-                            ))}
-                        </ul>
-                    </div>
-                </div>
-            </div> 
+                {itemsMenu.map((item, index) => (
+                <Link key={index} title={item.title} className={`flex max-sm:gap-4 px-2 sm:h-9 sm:w-9 items-center sm:justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${pathname == item.link ? ' bg-accent text-black py-2' : ''}`} data-state="closed" href={item.link}>
+                    {item.icon}
+                    <span className={`${open ? 'block' : 'hidden'} sm:hidden`}>{item.title}</span>
+                </Link>
+                ))}
+            </nav> 
+            {open && <button onClick={() => setOpen(!open)} type="button" className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
+                <X />
+                <span className="sr-only">Close</span>
+            </button>}
         </aside>
+        </>
     );
 }
 

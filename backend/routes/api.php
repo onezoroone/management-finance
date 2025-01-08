@@ -15,6 +15,8 @@ Route::post('register', [AuthController::class, 'register']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('telegram/add', [HomeController::class, 'telegramAdd']);
+    Route::get('goals', [HomeController::class, 'getGoals']);
+    Route::post('goal', [HomeController::class, 'addGoal']);
 });
 
 Route::post('telegram/connect', [HomeController::class, 'telegramConnect']);

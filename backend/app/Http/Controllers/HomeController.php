@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
+use App\Models\Reminder;
 
 class HomeController extends Controller
 {
@@ -55,6 +56,27 @@ class HomeController extends Controller
         $guestToken = $bodyGuestToken['token'];
 
         return response()->json($guestToken);
+    }
+
+    public function addReminder(Request $request){
+        $user = $request->user();
+        $reminder = new Reminder();
+        $reminder->user_id = $user->id;
+        $reminder->content = $request->title;
+        $reminder->reminder_date = $request->date;
+        $reminder->repeat_type = $request->repeat;
+        $reminder->status = 'pending';
+        $reminder->save();
+
+        return response()->json([
+            'message' => 'Thêm sự kiện thành công!'
+        ]);
+    }
+
+    public function getReminders(Request $request){
+        $user = $request->user();
+        $reminders = Reminder::where('user_id', $user->id)->where('status', 'pending')->get();
+        return response()->json($reminders);
     }
 }
 

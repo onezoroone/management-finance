@@ -14,4 +14,6 @@ Route::post('register', [AuthController::class, 'register']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('get-guest-token', [HomeController::class, 'getSupersetGuestToken']);
+    Route::post('reminder', [HomeController::class, 'addReminder']);
+    Route::get('reminder', [HomeController::class, 'getReminders']);
 });

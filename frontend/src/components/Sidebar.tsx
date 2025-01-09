@@ -54,6 +54,11 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
           </svg>,
             link: "/telegram"
         },
+        {
+            title: "Nhắc nhở",
+            icon: <Bell />,
+            link: "/reminder"
+        },
     ];
     return (  
         <>

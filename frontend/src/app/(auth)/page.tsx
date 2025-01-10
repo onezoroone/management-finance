@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 "use client"
-import { User } from "@/props/User";
 import useAuthStore from "@/stores/auth-store";
 import axios from "axios";
 import Link from "next/link";
@@ -17,7 +16,7 @@ interface IProps {
 export default function Home() {
   const router = useRouter();
   const MySwal = withReactContent(Swal);
-  const { login } = useAuthStore() as { login: (token: string, user: User) => void };
+  const { login } = useAuthStore();
   
   const [input, setInput] = useState<IProps>({
       email: "",
@@ -40,13 +39,16 @@ export default function Home() {
       remember: e.currentTarget.remember.checked,
     })
     .then((res) => {
-      login(res.data.token, res.data.user);
       MySwal.fire({
         icon: "success",
         title: "Thành công",
         text: res.data.message,
-      }).then(() => {
-        router.push("/dashboard");
+        confirmButtonText: 'Vào Dashboard',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          login(res.data.token, res.data.user);
+          router.push("/dashboard");
+        }
       });
     }).catch((err) => {
       if(err.response.status === 401){
@@ -109,11 +111,11 @@ export default function Home() {
             </div>
             <form onSubmit={onSubmit}>
               <div className="mb-4">
-                <input type="text" className="text-bgray-800 text-base border border-bgray-300 dark:border-darkblack-400 h-14 w-full focus:border-success-300 focus:outline-none focus:ring-0 rounded-lg px-4 py-3.5 placeholder:text-bgray-500 placeholder:text-base" placeholder="Email" name="email" value={input.email} onChange={handleChange} />
+                <input type="text" className="text-bgray-800 text-base border border-bgray-300 h-14 w-full focus:border-success-300 focus:outline-none focus:ring-0 rounded-lg px-4 py-3.5 placeholder:text-bgray-500 placeholder:text-base" placeholder="Email" name="email" value={input.email} onChange={handleChange} />
               </div>
               <div className="mb-6 relative">
-                <input type="text" className="text-bgray-800 text-base border border-bgray-300 dark:border-darkblack-400 h-14 w-full focus:border-success-300 focus:outline-none focus:ring-0 rounded-lg px-4 py-3.5 placeholder:text-bgray-500 placeholder:text-base" placeholder="Mật khẩu" name="password" value={input.password} onChange={handleChange} />
-                <button className="absolute top-4 right-4 bottom-4">
+                <input type="password" className="text-bgray-800 text-base border border-bgray-300 h-14 w-full focus:border-success-300 focus:outline-none focus:ring-0 rounded-lg px-4 py-3.5 placeholder:text-bgray-500 placeholder:text-base" placeholder="Mật khẩu" name="password" value={input.password} onChange={handleChange} />
+                <button type="button" className="absolute top-4 right-4 bottom-4">
                   <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M2 1L20 19" stroke="#718096" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
                     <path d="M9.58445 8.58704C9.20917 8.96205 8.99823 9.47079 8.99805 10.0013C8.99786 10.5319 9.20844 11.0408 9.58345 11.416C9.95847 11.7913 10.4672 12.0023 10.9977 12.0024C11.5283 12.0026 12.0372 11.7921 12.4125 11.417" stroke="#718096" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>

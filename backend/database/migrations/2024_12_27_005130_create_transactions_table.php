@@ -54,7 +54,8 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->text('content')->nullable();
             $table->timestamp('reminder_date');
-            $table->enum('status', ['pending', 'done']);
+            $table->enum('status', ['pending', 'done'])->default('pending');
+            $table->enum('repeat_type', ['none', 'daily', 'monthly'])->default('none');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
